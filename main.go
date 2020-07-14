@@ -1,7 +1,7 @@
 package main
 
 import (
-	list "container/list"
+	"container/list"
 	"fmt"
 )
 
@@ -12,13 +12,16 @@ import (
 // Set - all the visited vertex
 // Stack - all the vertexes in topolotical order
 
-// a -> c, b -> c
-// c -> e
-// e -> h, e -> f
-// f -> g
-// b -> c
+// a -> v
+// a -> c
 // b -> d
-// d -> f
+// b -> c
+// d -> z
+// z -> f
+// c -> e
+// c -> q
+// q -> r
+// e -> f
 
 type node map[string]bool
 type Graph struct {
@@ -98,18 +101,19 @@ func (g *Graph) topSort(vertex string, stack *list.List, visited map[string]bool
 
 func initGraph() *Graph {
 	g := NewGraph()
-	n := []string{"a", "c", "e", "f", "g", "b", "d", "f", "h"}
+	n := []string{"a", "v", "b", "f", "c", "d", "q", "e", "z", "r", "f"}
 	for _, val := range n {
 		g.AddNode(val)
 	}
+	g.AddEdge("a", "v")
 	g.AddEdge("a", "c")
 	g.AddEdge("b", "c")
-	g.AddEdge("c", "e")
-	g.AddEdge("e", "h")
-	g.AddEdge("e", "f")
-	g.AddEdge("f", "g")
-	g.AddEdge("b", "c")
 	g.AddEdge("b", "d")
-	g.AddEdge("d", "f")
+	g.AddEdge("d", "z")
+	g.AddEdge("q", "r")
+	g.AddEdge("c", "e")
+	g.AddEdge("c", "q")
+	g.AddEdge("e", "f")
+	g.AddEdge("z", "f")
 	return g
 }

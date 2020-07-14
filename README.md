@@ -4,15 +4,16 @@ We will use a Directed Graph.
 
 ```
 directed graph:
-a -> c, 
-b -> c
-c -> e
-e -> h, 
-e -> f
-f -> g
-b -> c
+a -> v
+a -> c
 b -> d
-d -> f
+b -> c
+d -> z
+z -> f
+c -> e
+c -> q
+q -> r
+e -> f
 ```
 
 In order to track the sorted list we will use a linked list.
