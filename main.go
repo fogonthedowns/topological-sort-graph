@@ -69,11 +69,18 @@ func main() {
 	// sorted stack
 	stack := list.New()
 	// range over all vertices
+	stack2 := make([]string, 0)
 	for vertex, _ := range g.nodes {
 		if visited[vertex] {
 			continue
 		}
-		g.topSort(vertex, stack, visited)
+		stack2 = g.topSort(vertex, stack, stack2, visited)
+	}
+	for len(stack2) > 0 {
+		n := len(stack2) - 1 // Top element
+		fmt.Print(stack2[n])
+
+		stack2 = stack2[:n] // Pop
 	}
 
 	// iterate over the stack
@@ -82,7 +89,7 @@ func main() {
 	}
 }
 
-func (g *Graph) topSort(vertex string, stack *list.List, visited map[string]bool) {
+func (g *Graph) topSort(vertex string, stack *list.List, stack2 []string, visited map[string]bool) []string {
 	// add to visited
 	visited[vertex] = true
 	// visit all the children first
@@ -92,11 +99,13 @@ func (g *Graph) topSort(vertex string, stack *list.List, visited map[string]bool
 			continue
 		}
 		// recursively call the function
-		g.topSort(child, stack, visited)
+		stack2 = g.topSort(child, stack, stack2, visited)
 		//stack.PushFront(child)
 	}
+	stack2 = append(stack2, vertex)
 	// after the children are visited push into the sorted stack
 	stack.PushFront(vertex)
+	return stack2
 }
 
 func initGraph() *Graph {
